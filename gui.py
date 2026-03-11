@@ -2297,10 +2297,14 @@ AI：已经是最低价了呢，质量绝对有保障。
 
         self.float_ball.geometry(f"{self._ball_size}x{self._ball_size}+{x}+{y}")
 
-        # 设置窗口背景为透明色（Windows）
+        # 设置窗口背景
         transparent_color = "#010101"
         self.float_ball.config(bg=transparent_color)
-        self.float_ball.attributes("-transparentcolor", transparent_color)
+        try:
+            self.float_ball.attributes("-transparentcolor", transparent_color)
+        except Exception:
+            # Linux 不支持 -transparentcolor，使用 -alpha 替代
+            self.float_ball.attributes("-alpha", 0.8)
 
         # 创建画布
         self.float_ball_canvas = tk.Canvas(
