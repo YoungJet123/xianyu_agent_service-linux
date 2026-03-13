@@ -4,6 +4,8 @@
 
 ## 主要改动
 
+- 支持最多 10 个闲鱼账号同时运营，每个账号独立 Tab、独立浏览器数据、独立数据库隔离
+- 账号配置通过 GUI「账号管理」页管理，无需修改代码
 - 修复 GUI 线程中 DISPLAY 环境变量未传递导致浏览器窗口无法弹出的问题
 - 修复 VPN/系统代理导致 Coze API 连接失败的问题（httpx 添加 `trust_env=False`）
 - 新增 Ubuntu 部署教程
@@ -12,6 +14,7 @@
 
 专为闲鱼小商家打造的 AI 智能客服系统，通过 RPA 自动读取和回复闲鱼消息，结合 Coze AI 工作流实现智能回复。
 
+- 多账号同时运营，互不干扰
 - 自动监控闲鱼消息，AI 决策后自动回复
 - 消息合并：用户连发多条消息时合并理解后统一回复
 - 跨会话记忆：记住老客户历史对话
@@ -30,17 +33,19 @@
 
 ## 配置
 
-复制 `.env.example` 为 `.env` 并填写：
+复制 `.env.example` 为 `.env` 并填写数据库等基础配置：
 
 ```
-COZE_API_TOKEN=你的Coze API Token
-COZE_BOT_ID=你的Bot ID
 DB_PASSWORD=你的MySQL密码
 DB_NAME=xbot
 ```
+
+Coze Token 和 Bot ID 不再写在 `.env` 里，启动后在 GUI「账号管理」页添加账号即可。
 
 ## 启动
 
 ```bash
 python3 gui.py
 ```
+
+启动后在「账号管理」页添加账号（别名、Coze Token、Bot ID），然后在各账号 Tab 或概览页点击启动。
